@@ -20,13 +20,14 @@ def test_PostCreateStudyCase():
 
     payload = json.dumps({
         "siteId": 5,
-        "studyYear": 2024,
-        "name": "AutoTest 2024"
+        "studyYear": 2025,
+        "name": "AutoTest 2025"
     })
 
     response = url_header.post_response("/DerApi/SeasonalAllocation/CreateStudyCase", path2, headers, payload)
     assert response.status_code == 200
     #assert response.text == 0
+
 
 def test_PostCalculateAssetsSettlement():
 

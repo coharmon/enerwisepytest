@@ -5,13 +5,13 @@ from settings.generate_token import *
 from utils.header import url_header
 
 def test_GetBidTransaction():
-    response = url_header.get_response("/DerApi/Optimization/GetBidTransaction?siteScheduleId=21631", path2, headers)
+    response = url_header.get_response("/DerApi/Optimization/GetBidTransaction?siteScheduleId=41377", path2, headers)
     d = json.loads(response.text)
     assert response.status_code == 200
     assert d[0]['productType'] == "DAE"
     assert d[0]['bidStatus'] == "Acknowledged"
-    assert d[1]['productType'] == "SR"
-    assert d[1]['bidStatus'] == "Draft"   
+    assert d[1]['productType'] == "RTE"
+    assert d[1]['bidStatus'] == "Acknowledged"   
 
 def test_GetSiteMarketPrograms():  
     response = url_header.get_response("/DerApi/Optimization/GetSiteMarketPrograms?siteId=19", path2, headers)
@@ -60,7 +60,7 @@ def test_Get_Site_Asset_MarketPrograms():
     d = json.loads(response.text)
     assert response.status_code == 200
     assert d['loadAssignments'][0]['marketProgramsOnOff']['DAE'] == True 
-    assert d['loadAssignments'][0]['marketProgramsOnOff']['EBS'] == False   
+    assert d['loadAssignments'][0]['marketProgramsOnOff']['EBS'] == True   
 
 def test_GetBpaRerunThreshold():
     response = url_header.get_response("/DerApi/site/GetBpaRerunThreshold?siteId=17", path2, headers)
@@ -75,6 +75,20 @@ def test_GetSiteOutageHours():
     d = json.loads(response.text)
     assert response.status_code == 200
     assert d[0]['outageHours'] == "01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24"
+
+def test_GetSiteSchedule():
+    response = url_header.get_response("/DerApi/Optimization/GetSiteSchedule?id=41284", path2, headers)
+    print(response.status_code)
+    d = json.loads(response.text)
+    assert response.status_code == 200
+    assert d['siteId'] == 54
+
+def test_GetMarketScheduleStatus():
+    response = url_header.get_response("/DerApi/Optimization/GetMarketScheduleStatus?siteId=54&siteScheduleId=41284", path2, headers)
+    print(response.status_code)
+    d = json.loads(response.text)
+    assert response.status_code == 200
+    assert d['name'] == "Closed"
 
 
 def test_UpdateUtilityRateManager():

@@ -11,16 +11,16 @@ def test_Get_DER_Electric_Rates():
     assert d[0]['siteId'] == 19
 
 def test_Get_DER_Electric_Rates_Tariff():  
-    response = url_header.get_response("/DerApi/Site/GetDerElectricRateTariff?electricRateId=53", path2, headers)
+    response = url_header.get_response("/DerApi/Site/GetDerElectricRateTariff?electricRateId=56", path2, headers)
     d = json.loads(response.text)
     assert response.status_code == 200
-    assert d[0]['electricRateId'] == 53
+    assert d[0]['electricRateId'] == 56
 
 def test_Get_DER_Electric_Rates_Tariff_PDM():
-    response = url_header.get_response("/DerApi/Site/GetDerPowerRateTariff_PDM?electricRateId=53", path2, headers)
+    response = url_header.get_response("/DerApi/Site/GetDerPowerRateTariff_PDM?electricRateId=43", path2, headers)
     d = json.loads(response.text)
     assert response.status_code == 200
-    assert d[0]['powerPdmRateTariffId'] == 66
+    assert d[0]['powerPdmRateTariffId'] == 8
 
     
 def test_UpdateUtilityRateManager():

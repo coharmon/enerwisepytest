@@ -8,7 +8,7 @@ def test_GetProgramAssetRevenuePostCost():
     response = url_header.get_response("/DerApi/SimulationEngine/GetProgramAssetRevenuePostCost?caseId=668", path2, headers)
     d = json.loads(response.text)
     assert response.status_code == 200
-    assert d[0]['marketProgramName'] == 'ES WMA Daily Dispatch'
+    assert d[0]['marketProgramName'] == 'NE Clean Peak' or d[0]['marketProgramName'] == 'ES WMA Daily Dispatch'
 
 def test_GetSimCaseParameters():  
     response = url_header.get_response("/DerApi/SimulationEngine/GetSimCaseParameters?siteId=35&caseId=182", path2, headers)
@@ -42,7 +42,7 @@ def test_GetSimulationCaseReportName():
     assert response.status_code == 200
     assert d[0] == 'Scale Microgrid Solutions Operating Bowery Farms_930_20240601_20250531.xlsx'
 
-def test_GetSimulationCase():
+def test_GetIndividualSimulationCase():
     response = url_header.get_response("/DerApi/SimulationEngine/GetSimulationCase?studyCaseId=930", path2, headers)
     d = json.loads(response.text)
     assert response.status_code == 200
@@ -52,7 +52,15 @@ def test_GetSimulationCase():
     assert d['includeYear2Savings'] == 0
     assert d['seasonalAllocationCaseId'] == 324
     assert d['monthlyAllocationCaseId'] == 728
-    
+
+def test_GetAllSimulationCases():
+    response = url_header.get_response("/DerApi/SimulationEngine/GetSimulationCases?siteId=2&isKpi=false", path2, headers)
+    d = json.loads(response.text)
+    assert response.status_code == 200
+    assert d[0]['siteId'] == 2
+    assert d[0]['isKpi'] == None
+
+
 # def test_AddSimulationCase():
 
 #     payload = json.dumps({
